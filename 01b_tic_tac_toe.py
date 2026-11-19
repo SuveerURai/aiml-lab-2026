@@ -16,7 +16,8 @@ def show(board):
 def main():
     board = [str(i) for i in range(1, 10)]
     player = "X"
-    for _ in range(9):
+    moves = 0
+    while moves < 9:
         show(board)
         try: pos = int(input(f"{player}, choose a square (1-9): ")) - 1
         except ValueError:
@@ -24,6 +25,7 @@ def main():
         if not 0 <= pos < 9 or board[pos] in ("X", "O"):
             print("That square is unavailable."); continue
         board[pos] = player
+        moves += 1
         if winner(board):
             show(board); print(f"{player} wins!"); return
         player = "O" if player == "X" else "X"
