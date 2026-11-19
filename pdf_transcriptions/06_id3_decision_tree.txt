@@ -1,0 +1,62 @@
+import pandas as pd
+from pandas import DataFrame
+from mathimport log
+from collections import Counter
+from pprint import pprint
+df_tennis = pd.read_csv('/home/sahyadri/AIMLDataset/PGM6/ID3.csv')
+df_tennis.keys()[0]
+def entropy(probs):
+returnsum([-prob* log(prob, 2) for probinprobs])
+def entropy_of_list(a_list):
+cnt = Counter(x for x ina_list)
+num_instances = len(a_list) * 1.0
+probs = [x /num_instances for x incnt.values()]
+returnentropy(probs)
+def information_gain(df, split_attribute_name, target_attribute_name):
+df_split = df.groupby(split_attribute_name)
+nobs = len(df.index) * 1.0
+BCS501G:ARTIFICIALINTELLIGENCEANDMACHINELEARNING
+df_agg_ent = df_split.agg({target_attribute_name:[entropy_of_list, lambdax:
+len(x)/nobs]})[target_attribute_name]
+df_agg_ent.columns = ['Entropy', 'PropObservations']
+new_entropy= sum(df_agg_ent['Entropy'] *df_agg_ent['PropObservations'])
+old_entropy= entropy_of_list(df[target_attribute_name])
+returnold_entropy- new_entropy
+def id3(df, target_attribute_name, attribute_names, default_class=None):
+cnt = Counter(x for x indf[target_attribute_name])
+if len(cnt) == 1:
+returnnext(iter(cnt))
+elif df.emptyor(not attribute_names):
+returndefault_class
+else:
+default_class = max(cnt.keys())
+gainz = [information_gain(df, attr, target_attribute_name) for attrinattribute_names]
+index_of_max = gainz.index(max(gainz))
+best_attr= attribute_names[index_of_max]
+tree= {best_attr:{}}
+remaining_attribute_names = [ifor iinattribute_names if i!= best_attr]
+forattr_val, data_subset indf.groupby(best_attr):
+subtree= id3(data_subset, target_attribute_name, remaining_attribute_names,
+default_class)
+tree[best_attr][attr_val] = subtree
+returntree
+attribute_names = list(df_tennis.columns)
+attribute_names.remove('PlayTennis')
+tree= id3(df_tennis, 'PlayTennis', attribute_names)
+print("\n\nTheResultant DecistionTreeis:\n")
+pprint(tree)
+def predict(query, tree):
+if isinstance(tree, str):
+returntree
+attribute= list(tree.keys())[0]
+attribute_value = query.get(attribute)
+if attribute_valueintree[attribute]:
+next_tree = tree[attribute][attribute_value]
+returnpredict(query, next_tree)
+BCS501G:ARTIFICIALINTELLIGENCEANDMACHINELEARNING
+else:
+return"Unknown"
+unseen_observation= {'Outlook':'sunny', 'Temperature':'cool', 'Humidity':'normal', 'Wind':
+'weak'}
+prediction= predict(unseen_observation, tree)
+print(f"\nPredictionforunseenobservation{unseen_observation}:{prediction}")

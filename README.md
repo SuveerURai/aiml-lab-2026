@@ -35,3 +35,22 @@ python 04_knn_iris.py
 ```
 
 Programs that draw charts may open a Matplotlib window. The original manual refers to local CSV files for some exercises; these versions use scikit-learn's included datasets or a small in-file dataset so they can run without those machine-specific paths.
+
+## Source programs transcribed from the manual
+
+The `pdf_transcriptions/` folder contains the program text extracted from the supplied 2026 PDF, one file per exercise (1a and 1b are separate). It preserves the PDF text layer, including original names, code choices, and machine-specific dataset paths. PDF extraction can lose code indentation or spacing; these `.txt` transcriptions are reference copies and may not run as-is. The root `.py` files are cleaned runnable implementations for convenient execution.
+
+| Exercise | PDF text transcription |
+|---|---|
+| 1a | [01a_chatbot.txt](pdf_transcriptions/01a_chatbot.txt) |
+| 1b | [01b_tic_tac_toe.txt](pdf_transcriptions/01b_tic_tac_toe.txt) |
+| 2a | [02a_a_star.txt](pdf_transcriptions/02a_a_star.txt) |
+| 2b | [02b_ao_star.txt](pdf_transcriptions/02b_ao_star.txt) |
+| 3 | [03_em_vs_kmeans.txt](pdf_transcriptions/03_em_vs_kmeans.txt) |
+| 4 | [04_knn_iris.txt](pdf_transcriptions/04_knn_iris.txt) |
+| 5 | [05_linear_regression.txt](pdf_transcriptions/05_linear_regression.txt) |
+| 6 | [06_id3_decision_tree.txt](pdf_transcriptions/06_id3_decision_tree.txt) |
+| 7 | [07_naive_bayes.txt](pdf_transcriptions/07_naive_bayes.txt) |
+| 8 | [08_gibbs_sampling.txt](pdf_transcriptions/08_gibbs_sampling.txt) |
+| 9 | [09_backpropagation_ann.txt](pdf_transcriptions/09_backpropagation_ann.txt) |
+| 10 | [10_svm_classifier.txt](pdf_transcriptions/10_svm_classifier.txt) |

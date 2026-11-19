@@ -1,0 +1,51 @@
+import matplotlib.pyplot as plt
+from sklearnimport datasets, metrics
+from sklearn.model_selectionimport train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.svm import SVC
+# Loaddataset
+bc= datasets.load_breast_cancer()
+X = bc.data
+y= bc.target
+# Reservethelast sampleas unseendata
+new_instance= X[-1:]
+new_actual= y[-1]
+X = X[:-1]
+y= y[:-1]
+# Train-test split
+X_train, X_test, y_train, y_test = train_test_split(
+X, y, test_size=0.3, random_state=1, stratify=y
+)
+BCS501G:ARTIFICIALINTELLIGENCEANDMACHINELEARNING
+# Standardizefeatures
+sc= StandardScaler()
+sc.fit(X_train)
+X_train_std= sc.transform(X_train)
+X_test_std= sc.transform(X_test)
+# TrainSVMModel
+svc= SVC(C=1.0, kernel="linear", random_state=1)
+svc.fit(X_train_std, y_train)
+# ModelEvaluationPredictions
+y_predict = svc.predict(X_test_std)
+print("=== ModelEvaluation===")
+print("Accuracyscore:%.3f" %metrics.accuracy_score(y_test, y_predict))
+# DIAGRAM:Plottingexact Scikit-LearnConfusionMatrix Plot
+disp= metrics.ConfusionMatrixDisplay.from_estimator(
+svc,
+X_test_std,
+y_test,
+display_labels=bc.target_names,
+cmap=plt.cm.Blues,
+)
+disp.ax_.set_title("SVMClassificationConfusionMatrix", fontweight="bold", fontsize=14,
+pad=12)
+plt.show()
+print("\nClassificationReport:")
+print(metrics.classification_report(y_test, y_predict, target_names=bc.target_names))
+print("TotalSupport Vectors:", len(svc.support_))
+# Predict onthesingle unseeninstance(withscalingfix)
+new_instance_std= sc.transform(new_instance)
+prediction= svc.predict(new_instance_std)
+print("\n=== Classificationof OneUnseenInstance===")
+print("Predictedclass:", bc.target_names[prediction[0]])
+print("Actualclass:", bc.target_names[new_actual])

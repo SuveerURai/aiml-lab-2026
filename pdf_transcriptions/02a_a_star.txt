@@ -1,0 +1,96 @@
+def aStarAlgo(start_node, stop_node):
+open_set = set(start_node)
+closed_set = set()
+g= {} #storedistance from starting node
+parents = {}# parents contains anadjacencymapof allnodes
+#ditance of starting nodefrom itself is zero
+g[start_node] = 0
+#start_node is root nodei.eit has no parent nodes
+#sostart_nodeis set to its ownparent node
+parents[start_node] = start_node
+whilelen(open_set) >0:
+n= None
+#nodewithlowest f() is found
+forvinopen_set:
+if n== Noneorg[v] +heuristic(v) <g[n] + heuristic(n):
+n= v
+if n== stop_nodeor Graph_nodes[n] == None:
+pass
+else:
+for(m, weight) inget_neighbors(n):
+#nodes 'm'not infirst andlast set areaddedtofirst
+#nis set its parent
+if m not inopen_set andm not inclosed_set:
+open_set.add(m)
+parents[m] = n
+g[m] = g[n] + weight
+#foreachnodem,compareits distancefrom start i.eg(m) to the
+#from start throughnnode
+else:
+if g[m] >g[n] +weight:
+#update g(m)
+g[m] = g[n] + weight
+#changeparent of m to n
+BCS501G:ARTIFICIALINTELLIGENCEANDMACHINELEARNING
+parents[m] = n
+#if m inclosedset,removeandaddto open
+if m inclosed_set:
+closed_set.remove(m)
+open_set.add(m)
+if n== None:
+print('Pathdoes not exist!')
+returnNone
+# if thecurrent node is thestop_node
+# thenwebeginreconstructinthepathfrom it to thestart_node
+if n== stop_node:
+path= []
+whileparents[n] != n:
+path.append(n)
+n= parents[n]
+path.append(start_node)
+path.reverse()
+print('Pathfound:{}'.format(path))
+returnpath
+# removenfrom theopen_list, andaddit to closed_list
+# becauseallof his neighbors were inspected
+open_set.remove(n)
+closed_set.add(n)
+print('Pathdoes not exist!')
+returnNone
+#definefuctionto returnneighborandits distance
+#from thepassednode
+def get_neighbors(v):
+if vinGraph_nodes:
+returnGraph_nodes[v]
+else:
+returnNone
+#forsimplicitywellconsiderheuristicdistances given
+#andthis functionreturns heuristicdistance for allnodes
+BCS501G:ARTIFICIALINTELLIGENCEANDMACHINELEARNING
+def heuristic(n):
+H_dist = {
+'A':10,
+'B':8,
+'C':5,
+'D':7,
+'E':3,
+'F':6,
+'G':5,
+'H':3,
+'I':1,
+'J':0
+}
+returnH_dist[n]
+#Describeyour graphhere
+Graph_nodes = {
+'A':[('B', 6), ('F', 3)],
+'B':[('C', 3), ('D', 2)],
+'C':[('D', 1), ('E', 5)],
+'D':[('C', 1), ('E', 8)],
+'E':[('I', 5), ('J', 5)],
+'F':[('G', 1),('H', 7)] ,
+'G':[('I', 3)],
+'H':[('I', 2)],
+'I':[('E', 5), ('J', 3)],
+}
+aStarAlgo('A', 'J')

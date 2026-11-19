@@ -1,0 +1,11 @@
+from nltk.chat.utilimport Chat, reflections
+pairs = [
+['myname is (.*)',['Hello! %1']],
+['(hi|hello|hey|holla|hola)',['Heythere!','Hithere!','Hey!']],
+['(.*) your name?', ['Mynameis Geeky']],
+['(.*) do youdo ?', ['Weprovideaplatform fortechenthusiasts, awide rangeof
+options !']],
+['(.*) createdyou?', ['Geeksforgeeks createdmeusingpythonandNLTK !']]
+]
+chat = Chat(pairs,reflections)
+chat.converse()
